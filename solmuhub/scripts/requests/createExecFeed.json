@@ -1,0 +1,5 @@
+{
+  "name":"ExecutableFeed1",
+  "source": "'Hello world';",
+  "description":"Basic executable feed"
+}

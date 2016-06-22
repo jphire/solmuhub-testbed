@@ -1,0 +1,18 @@
+{
+  "name": "solmuhub-feed-tester",
+  "version": "1.0.0",
+  "description": "",
+  "main": "data1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Janne Laukkanen",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.0-rc.5",
+    "os-monitor": "^1.0.4",
+    "path": "^0.12.7",
+    "request": "*",
+    "winston": "^2.2.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+	"baseUrl":"https://localhost",
+	"urlSuffix":"/api/feeds/executable",
+	"ports":[3000, 3400,3500,3600,3700,3800]
+}

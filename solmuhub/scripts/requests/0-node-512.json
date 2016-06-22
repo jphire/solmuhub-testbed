@@ -1,0 +1,20 @@
+{
+  "name":"0-node-512",
+  "source":"var img=data.feed4;var decoded=img;var i=0;while(i<decoded.data.length){decoded.data[i++]=decoded.data[i]-25; decoded.data[i++]=decoded.data[i]+0;decoded.data[i++]=decoded.data[i]+0;decoded.data[i++]=0xFF;};decoded",
+  "profiler": {
+    "enabled":true
+  },
+  "response":{
+      "processors":["jpegEncode"],
+      "contentType":"image/jpeg"
+  },
+  "data":[
+      {
+        "name":"feed4",
+        "type": "remote",
+        "processors": "jpegDecode",
+        "contentType":"image/jpeg",
+        "url": "http://res.cloudinary.com/demo/image/upload/w_512,h_512/sample.jpg"
+      }
+  ]
+}

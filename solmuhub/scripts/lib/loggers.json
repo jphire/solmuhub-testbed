@@ -1,0 +1,34 @@
+{
+	"generic": [
+		{
+			"name":"generic",
+			"transports": {
+			    "console": {
+			      "level": "info",
+			      "colorize": true,
+			      "label": "generic"
+			    },
+			    "file": {
+			        "level": "error",
+			        "filename": "../../logs/generic"
+			    }
+			}
+		}
+	],
+	"profiler": [
+		{
+			"name":"profiler",
+			"transports": {
+			    "console": {
+			      "level": "info",
+			      "colorize": true,
+			      "label": "profile"
+			    },
+			    "file": {
+			        "level": "info",
+			        "filename": "../../logs/profiler"
+			    }
+			}
+		}
+	]
+}

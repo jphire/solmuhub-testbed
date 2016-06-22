@@ -1,0 +1,28 @@
+{
+  "name":"image-processing",
+  "source":"var img=data.feed;var decoded=img;var i=0;while(i<decoded.data.length){decoded.data[i++]=120; decoded.data[i++]=decoded.data[i];decoded.data[i++]=decoded.data[i];decoded.data[i++]=0xFF;};decoded",
+  "profiler": {
+    "enabled":true
+  },
+  "response":{
+      "processors":["jpegEncode"],
+      "contentType": "image/jpeg"
+  },
+  "data":[
+        {
+            "name":"feed",
+            "type": "remote",
+            "contentType":"image/jpeg",
+            "processors":"jpegDecode",
+            "url": "http://res.cloudinary.com/demo/image/upload/w_SIZE,h_SIZE/sample.jpg"
+        }
+  ],
+  "distribution": {
+      "enabled":false,
+      "maxDepth":1,
+      "mode":"sync",
+      "mapper":"imageMapper",
+      "reducer":"imageReducer",
+      "nodes": []
+  }
+}
