@@ -23,17 +23,18 @@ sizes = []
 nodes = []
 types = ['cpu', 'mem', 'latency', 'payload', 'profile']
 tags_zero = ['feed_fetched', 'after_data_fetch', 'execution_end', 'before_sending_response']
-tags_multi = ['feed_fetched', 'after_data_fetch', 'after_data_map', 'piece_response_latency', 'dist_response_latency', 'after_reducer', 'before_sending_response']
-tags = ['feed_fetched', 'after_data_fetch', 'execution_end', 'after_data_map', 'piece_response_latency', 'dist_response_latency', 'after_reducer', 'before_sending_response']
+tags_multi = ['feed_fetched', 'after_data_fetch', 'after_data_map', 'piece_response_latency', 'dist_response_latency', 'after_reducer', 'before_sending_response', 'after_response']
+tags = ['feed_fetched', 'after_data_fetch', 'execution_end', 'after_data_map', 'piece_response_latency', 'dist_response_latency', 'after_reducer', 'before_sending_response', 'after_response']
 tags_map = {
 	'feed_fetched':'Fetching-feed', 
 	'after_data_fetch':'Fetching-data', 
 	'execution_end':'Executing-code',
 	'after_data_map':'Mapping-data',
-	'piece_response_latency':'Getting-a-shared-piece', 
-	'dist_response_latency':'Getting-all-pieces', 
+	'piece_response_latency':'Hub-latency', 
+	'dist_response_latency':'Gathering-all-responses', 
 	'after_reducer':'Reducing-data', 
-	'before_sending_response':'After-all-processing'
+	'before_sending_response':'Formatting-response',
+	'after_response':'Response-in-flight'
 }
 
 def mean_confidence_interval(data, confidence=0.95):
@@ -51,6 +52,7 @@ def run(filename, nodes, size):
 	memData = []
 	latencyData = []
 	content_length = []
+	profile['after_response'] = []
 	with open(filename) as file:
 		for line in file:
 			data = json.loads(line)['profiler']['data']
@@ -69,6 +71,7 @@ def run(filename, nodes, size):
 					profile[key] = []
 				for value in val:
 					profile[key].append(value['time'])
+			profile['after_response'].append(int(latency))
 
 	for tag, val in profile.items():
 		means[tag] = mean_confidence_interval(val)

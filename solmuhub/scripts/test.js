@@ -101,9 +101,8 @@ var run = function (nodeCount, size)  {
     // });
 }
 
-
-var reqCount = process.argv[2] || 10;
-var nodeCount = process.argv[3] || 3;
+var reqCount = process.argv[2] || 2;
+var nodeCount = process.argv[3] || 5;
 
 var size = process.argv[4] || '512';
 
@@ -121,19 +120,38 @@ for (var i = 0; i < nodeCount; i++) {
 }
 
 // Run tests serially
-async.series(list);
-
-var list2 = []
-for (var i = 0; i < nodeCount; i++) {
-    for (var j = 0; j < reqCount; j++) {
-        let nodeCount = i;
-        list2.push(function (callback) {
-            run(nodeCount, 512).then(
-                (res) => callback(null, res), 
-                (err)=> {console.log('Error', err)}
-            );
-        });
+async.series(list, (err, results) => {
+    console.log('first done')
+    let list = []
+    for (var i = 0; i < nodeCount; i++) {
+        for (var j = 0; j < reqCount; j++) {
+            let nodeCount = i;
+            list.push(function (callback) {
+                run(nodeCount, 512).then(
+                    (res) => callback(null, res), 
+                    (err)=> {console.log('Error', err)}
+                );
+            });
+        }
     }
-}
+    async.series(list, (err, results) => {
+        console.log('second done')
+        let list = []
+        for (var i = 0; i < nodeCount; i++) {
+            for (var j = 0; j < reqCount; j++) {
+                let nodeCount = i;
+                list.push(function (callback) {
+                    run(nodeCount, 1024).then(
+                        (res) => callback(null, res), 
+                        (err)=> {console.log('Error', err)}
+                    );
+                });
+            }
+        }
+        async.series(list, (err, results) => {
+            console.log('3rd done')
+        });
+    });
+});
 
-async.series(list2);
+
