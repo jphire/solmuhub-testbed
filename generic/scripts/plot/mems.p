@@ -1,8 +1,8 @@
 set encoding utf8
 
-#set terminal pdf
+set term pdf font "Helvetica,8" size 5in,3in
 
-set term pdfcairo enhanced color solid font "Helvetica,14" linewidth 1.5 dashlength 1.5 size 6in,4in
+#set term pdfcairo enhanced color solid font "Helvetica,14" linewidth 1.5 dashlength 1.5 size 6in,4in
 #set terminal postscript portrait enhanced mono dashed lw 1 "Helvetica" 14
 
 set boxwidth 0.8 absolute
@@ -10,7 +10,7 @@ set style fill solid 0.9 border lt -1
 
 set style data histogram
 set style histogram clustered gap 1 title textcolor lt -1
-set style fill solid
+set style fill solid 0.5
 
 # Greyscale colors
 set linetype 1 lc rgb '#000000' lw 1.5 ps 1.0 pi 1
@@ -18,16 +18,9 @@ set linetype 2 lc rgb '#555555'
 set linetype 3 lc rgb '#999999'
 set linetype 4 lc rgb '#eeeeee'
 
-#set output '../../results/latest/plot/quicksort.tex'
-set output '~/Documents/Opiskelu/GitGradu/Charts/mems.pdf'
-#set output '../../results/latest/plot/mems.pdf'
+set output '../../../../src/Figures/mems.pdf'
 
-#set size 1.0, 1.0
-
-#set xrange [0:3]
 set yrange [0:10]
-
-#set logscale y 2
 
 set grid x y
 

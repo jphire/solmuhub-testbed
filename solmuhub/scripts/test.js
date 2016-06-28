@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ * This script is used to run the Solmuhub tests on multiple IoT hubs. Usage: 
+ * $ node test.js [requestCount] [hubCount] [imageSize]
+ * where requestCount is the amount of request sent for one test type, hubCount is
+ * total amount of hubs and imageSize is the amount of pixels per side in test data.
+ */
+
 var request = require('request');
 var fs = require('fs');
 var conf = require('./conf.json');
@@ -85,10 +92,7 @@ var run = function (nodeCount, size)  {
         size: size
     }
     return sendRequest(reqBody, params);
-    // .then((val) => {
-    //     cb(null, val);
-    // }, (err) => {cb(err)});
-    // return Promise.resolve(reqP);
+
     // Send requests to all hubs in parallel. Note that if the hubs are
     // located on the same node, performance starts to go down if there are more 
     // hubs specified than cores to execute.
@@ -97,30 +101,39 @@ var run = function (nodeCount, size)  {
     // });
 }
 
-var list = [];
 
-var size = process.argv[3] || '512';
-var nodeCount = process.argv[4] || 3;
 var reqCount = process.argv[2] || 10;
+var nodeCount = process.argv[3] || 3;
 
+var size = process.argv[4] || '512';
 
-// for (var k = 0; k < sizes.length; k++) {
-    for (var i = 0; i < nodeCount; i++) {
-        for (var j = 0; j < reqCount; j++) {
-            let nodeCount = i;
-            list.push(function (callback) {
-                run(nodeCount, size).then(
-                    (res) => callback(null, res), 
-                    (err)=> {console.log('Error', err)}
-                );
-            });
-        }
+var list = [];
+for (var i = 0; i < nodeCount; i++) {
+    for (var j = 0; j < reqCount; j++) {
+        let nodeCount = i;
+        list.push(function (callback) {
+            run(nodeCount, 256).then(
+                (res) => callback(null, res), 
+                (err)=> {console.log('Error', err)}
+            );
+        });
     }
-// };
+}
 
 // Run tests serially
 async.series(list);
 
+var list2 = []
+for (var i = 0; i < nodeCount; i++) {
+    for (var j = 0; j < reqCount; j++) {
+        let nodeCount = i;
+        list2.push(function (callback) {
+            run(nodeCount, 512).then(
+                (res) => callback(null, res), 
+                (err)=> {console.log('Error', err)}
+            );
+        });
+    }
+}
 
-
-
+async.series(list2);
