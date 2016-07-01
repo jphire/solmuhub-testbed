@@ -44,6 +44,15 @@ def mean_confidence_interval(data, confidence=0.95):
     h = se * sp.stats.t._ppf((1+confidence)/2., n-1)
     return m, m-h, m+h
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+    except:
+	return False
+
 def run(filename, nodes, size):
 	dataMap = {}
 	profile = {}
@@ -53,13 +62,15 @@ def run(filename, nodes, size):
 	latencyData = []
 	content_length = []
 	profile['after_response'] = []
+
 	with open(filename) as file:
 		for line in file:
 			data = json.loads(line)['profiler']['data']
 			latency = json.loads(line)['profiler']['latency']
 			for key, val in data.items():
 				usage = val[0]['usage']
-				cpuData.append(usage['cpu'])
+				if is_number(usage['cpu']):
+					cpuData.append(usage['cpu'])
 				memData.append(usage['mem'])
 				latencyData.append(latency)
 				# payload data
@@ -112,7 +123,7 @@ for dirname, dirnames, filenames in os.walk(latest_path):
 # Create new timestamped folder in results and remove old ones
 results_path = '../results/' + str(latest)
 if not os.path.exists(results_path):
-    os.makedirs(results_path)
+	os.makedirs(results_path)
 else:
 	shutil.rmtree(results_path)
 	os.makedirs(results_path)

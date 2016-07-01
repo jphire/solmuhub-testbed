@@ -13,31 +13,47 @@
     		"urlSuffix":"/api/feeds/executable",
     		"controllerUrl": "https://localhost:3000/api/feeds/executable"
     	},
-        "runPath":"/api/feeds/1/run",
-        "controller": {
-            "url":"https://localhost",
+    	"runPath":"/api/feeds/1/run",
+    	"controller": {
+            "url":"https://solmu-controller",
             "port":3000
         },
         "nodes":[
             {
-                "url":"https://localhost",
+                "url":"https://solmu-controller",
                 "port":3000,
                 "controller": true
             },
             {
-                "url":"https://localhost",
+                "url":"https://solmu-1",
+                "port":3300
+            },
+    	    {
+                "url":"https://solmu-1",
+                "port":3400
+            },
+    	    {
+                "url":"https://solmu-1",
+                "port":3500
+            },
+    	    {
+                "url":"https://solmu-1",
+                "port":3600
+            },
+    	    {
+                "url":"https://solmu-2",
                 "port":3300
             },
             {
-                "url":"https://localhost",
+                "url":"https://solmu-2",
                 "port":3400
             },
             {
-                "url":"https://localhost",
+                "url":"https://solmu-2",
                 "port":3500
             },
             {
-                "url":"https://localhost",
+                "url":"https://solmu-2",
                 "port":3600
             }
         ]

@@ -9,13 +9,24 @@
 
 var request = require('request');
 var fs = require('fs');
-var conf = require('./conf.json');
 var async = require('async');
 var winston = require('winston');
 var path = require('path');
 var loggers = require('./lib/loggers');
 var mkdirSync = require('./lib/mkdirSync');
 
+let nconf = require('nconf')
+nconf.env().argv();
+
+if (nconf.get('type') === 'remote') {
+    nconf.file('./remote-conf.json');
+} else {
+    nconf.file('./conf.json');
+}
+
+nconf.required(['solmuhub']);
+
+let conf = nconf.get('solmuhub');
 
 var timestamp = Date.now() + '';
 mkdirSync.do(path.join(__dirname, '../logs', 'profiler', timestamp+''));
@@ -39,7 +50,7 @@ var sendRequest = function (requestBody, params) {
     var responses = [];
     var options = {
         method: 'POST',
-        uri: conf.urls.controllerUrl + '/1/run',
+        uri: conf.controller.url + ':' + conf.controller.port + conf.runPath,
         body: JSON.stringify(requestBody),
         headers: {
             'Content-Type': 'application/json'
@@ -101,10 +112,10 @@ var run = function (nodeCount, size)  {
     // });
 }
 
-var reqCount = process.argv[2] || 2;
-var nodeCount = process.argv[3] || 5;
+var reqCount = nconf.get('reqCount') || 2;
+var nodeCount = nconf.get('nodeCount') || 5;
 
-var size = process.argv[4] || '512';
+var size = nconf.get('size') || '512';
 
 var list = [];
 for (var i = 0; i < nodeCount; i++) {
