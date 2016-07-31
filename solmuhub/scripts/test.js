@@ -20,6 +20,7 @@ var mkdirSync = require('./lib/mkdirSync');
 var timestamp = Date.now() + '';
 mkdirSync.do(path.join(__dirname, '../logs', 'profiler', timestamp+''));
 
+// Initialize loggers
 loggers.generic.forEach((logger, index, arr) => {
     logger.transports.file.filename = path.join(__dirname, '../logs/generic', timestamp, 'local');
     winston.loggers.add(logger.name, logger.transports);
@@ -33,8 +34,10 @@ loggers.profiler.forEach((logger, index, arr) => {
 var profiler = winston.loggers.get('profiler');
 var generic = winston.loggers.get('generic');
 
+// Get options for requests that are sent to controller
 var reqOptions = require('./requests/image-processing');
 
+// FUnction for sending processing tasks to hubs
 var sendRequest = function (requestBody, params) {
     var responses = [];
     var options = {
@@ -81,6 +84,7 @@ var run = function (nodeCount, size)  {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     let reqBody = require('./requests/image-processing');
     let nodes = conf.nodes;
+    // replace SIZE in url with the current requested size
     reqBody.data[0].url = reqBody.data[0].url.replace(/SIZE/g, size);
 
     if (nodeCount > 0) {
@@ -104,54 +108,81 @@ var run = function (nodeCount, size)  {
 var reqCount = process.argv[2] || 2;
 var nodeCount = process.argv[3] || 5;
 
-var size = process.argv[4] || '512';
+var sizes = [256, 512, 1024];
 
-var list = [];
-for (var i = 0; i < nodeCount; i++) {
-    for (var j = 0; j < reqCount; j++) {
-        let nodeCount = i;
-        list.push(function (callback) {
-            run(nodeCount, 256).then(
-                (res) => callback(null, res), 
-                (err)=> {console.log('Error', err)}
-            );
-        });
-    }
-}
+// var list = [];
+// for (var i = 0; i < nodeCount; i++) {
+//     for (var j = 0; j < reqCount; j++) {
+//         let nodeCount = i;
+//         list.push(function (callback) {
+//             run(nodeCount, 256).then(
+//                 (res) => callback(null, res), 
+//                 (err)=> {console.log('Error', err)}
+//             );
+//         });
+//     }
+// }
 
-// Run tests serially
-async.series(list, (err, results) => {
-    console.log('first done')
+// // Run tests serially
+// async.series(list, (err, results) => {
+//     console.log('first done')
+//     let list = []
+//     for (var i = 0; i < nodeCount; i++) {
+//         for (var j = 0; j < reqCount; j++) {
+//             let nodeCount = i;
+//             list.push(function (callback) {
+//                 run(nodeCount, 512).then(
+//                     (res) => callback(null, res), 
+//                     (err)=> {console.log('Error', err)}
+//                 );
+//             });
+//         }
+//     }
+//     async.series(list, (err, results) => {
+//         console.log('second done')
+//         let list = []
+//         for (var i = 0; i < nodeCount; i++) {
+//             for (var j = 0; j < reqCount; j++) {
+//                 let nodeCount = i;
+//                 list.push(function (callback) {
+//                     run(nodeCount, 1024).then(
+//                         (res) => callback(null, res), 
+//                         (err)=> {console.log('Error', err)}
+//                     );
+//                 });
+//             }
+//         }
+//         async.series(list, (err, results) => {
+//             console.log('3rd done')
+//         });
+//     });
+// });
+
+
+let loadList = function (index) {
     let list = []
     for (var i = 0; i < nodeCount; i++) {
         for (var j = 0; j < reqCount; j++) {
             let nodeCount = i;
             list.push(function (callback) {
-                run(nodeCount, 512).then(
+                run(nodeCount, sizes[index]).then(
                     (res) => callback(null, res), 
                     (err)=> {console.log('Error', err)}
                 );
             });
         }
     }
+
     async.series(list, (err, results) => {
-        console.log('second done')
-        let list = []
-        for (var i = 0; i < nodeCount; i++) {
-            for (var j = 0; j < reqCount; j++) {
-                let nodeCount = i;
-                list.push(function (callback) {
-                    run(nodeCount, 1024).then(
-                        (res) => callback(null, res), 
-                        (err)=> {console.log('Error', err)}
-                    );
-                });
-            }
+        console.log(sizes[index] + ' done', index)
+        
+        index++;
+        if (index < sizes.length) {
+            loadList(index, sizes);
         }
-        async.series(list, (err, results) => {
-            console.log('3rd done')
-        });
     });
-});
+}
+
+loadList(0);
 
 

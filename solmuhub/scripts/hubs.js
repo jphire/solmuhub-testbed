@@ -29,6 +29,8 @@ if (process.argv[2] == 'up') {
 		child.stdout.on('data', function (data) {
 			console.log(data.toString('utf8'));
 			let str = data.toString('utf8');
+			
+			// Create executable feed at the newly started hub
 			if (str.startsWith('Web server listening at')) {
 				let opts = {
 					method: 'POST',
