@@ -1,34 +1,46 @@
 {
-	"loopCount": 10,
-	"paths":{
-		"hubs_path":"/Users/jphire/Code/node_projects/solmuhub",
-		"base_path":"/Users/jphire/Chef/iothub-cookbooks/testbed/solmuhub/results",
-		"all_path":"/Users/jphire/Chef/iothub-cookbooks/testbed/solmuhub/results/all",
-		"latest_path":"/Users/jphire/Chef/iothub-cookbooks/testbed/solmuhub/results/latest"
-	},
-	"ports":[3000, 3400,3500,3600,3700,3800],
-	"urls":{
-		"baseUrl":"https://localhost",
-        "imageServer":"http://localhost:4000/image",
-		"executableUrl": "https://localhost:3000/api/feeds/executable",
-		"urlSuffix":"/api/feeds/executable",
-		"controllerUrl": "https://localhost:3000/api/feeds/executable"
-	},
-	"nodes":[
-        {
-            "url":"https://localhost:3400/api/feeds/executable/1/run"
+    "solmuhub": {
+        "loopCount": 10,
+        "paths":{
+            "hubsPath":"/Users/jphire/Code/node_projects/solmuhub",
+            "basePath":"/Users/jphire/Documents/Opiskelu/Thesis/testbed/solmuhub/results",
+            "allPath":"/Users/jphire/Documents/Opiskelu/Thesis/testbed/solmuhub/results/all",
+            "latestPath":"/Users/jphire/Documents/Opiskelu/Thesis/testbed/solmuhub/results/latest"
         },
-        {
-            "url":"https://localhost:3500/api/feeds/executable/1/run"
+        "urls":{
+            "baseUrl":"https://localhost",
+            "executableUrl": "https://localhost:3000/api/feeds/executable",
+    		"urlSuffix":"/api/feeds/executable",
+    		"controllerUrl": "https://localhost:3000/api/feeds/executable"
+    	},
+        "runPath":"/api/feeds/executable/1/run",
+        "executablePath":"/api/feeds/executable",
+        "controller": {
+            "url":"https://localhost",
+            "port":3000
         },
-        {
-            "url":"https://localhost:3600/api/feeds/executable/1/run"
-        },
-        {
-            "url":"https://localhost:3700/api/feeds/executable/1/run"
-        },
-        {
-            "url":"https://localhost:3800/api/feeds/executable/1/run"
-        }
-    ]
+        "nodes":[
+            {
+                "url":"https://localhost",
+                "port":3000,
+                "controller": true
+            },
+            {
+                "url":"https://localhost",
+                "port":3300
+            },
+            {
+                "url":"https://localhost",
+                "port":3400
+            },
+            {
+                "url":"https://localhost",
+                "port":3500
+            },
+            {
+                "url":"https://localhost",
+                "port":3600
+            }
+        ]
+    }
 }

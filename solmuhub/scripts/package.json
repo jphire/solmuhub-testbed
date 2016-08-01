@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.0.0-rc.5",
+    "nconf": "^0.8.4",
     "os-monitor": "^1.0.4",
     "path": "^0.12.7",
     "request": "*",

@@ -9,13 +9,24 @@
 
 var request = require('request');
 var fs = require('fs');
-var conf = require('./conf.json');
 var async = require('async');
 var winston = require('winston');
 var path = require('path');
 var loggers = require('./lib/loggers');
 var mkdirSync = require('./lib/mkdirSync');
 
+let nconf = require('nconf')
+nconf.env().argv();
+
+if (nconf.get('type') === 'remote') {
+    nconf.file('./remote-conf.json');
+} else {
+    nconf.file('./conf.json');
+}
+
+nconf.required(['solmuhub']);
+
+let conf = nconf.get('solmuhub');
 
 var timestamp = Date.now() + '';
 mkdirSync.do(path.join(__dirname, '../logs', 'profiler', timestamp+''));
@@ -33,16 +44,17 @@ loggers.profiler.forEach((logger, index, arr) => {
 
 var profiler = winston.loggers.get('profiler');
 var generic = winston.loggers.get('generic');
+var reqDataPath = './requests/' + nconf.get('data') + '-data';
 
 // Get options for requests that are sent to controller
-var reqOptions = require('./requests/image-processing');
+var reqOptions = require(reqDataPath);
 
-// FUnction for sending processing tasks to hubs
+// Function for sending processing tasks to hubs
 var sendRequest = function (requestBody, params) {
     var responses = [];
     var options = {
         method: 'POST',
-        uri: conf.urls.controllerUrl + '/1/run',
+        uri: conf.controller.url + ':' + conf.controller.port + conf.runPath,
         body: JSON.stringify(requestBody),
         headers: {
             'Content-Type': 'application/json'
@@ -58,11 +70,12 @@ var sendRequest = function (requestBody, params) {
             if (error) {
                 reject(error);
             } else if (response.statusCode !== 200 && response.statusCode !== 0) {
-                generic.error('Error executing code on node: ', JSON.parse(body).error.message)
+                // generic.error('Error executing code on node: ', JSON.parse(body).error.message)
                 var err = new Error('Could not fetch defined data for feed : ' 
                     + response);
                 err.name = 'Data Error';
                 err.statusCode = err.status = response.statusCode;
+                console.log(body)
                 reject(err);
             } else {
                 // profiler.info(JSON.parse(body));
@@ -82,14 +95,13 @@ var sendRequest = function (requestBody, params) {
 var run = function (nodeCount, size)  {
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    let reqBody = require('./requests/image-processing');
-    let nodes = conf.nodes;
+    let reqBody = require(reqDataPath);
     // replace SIZE in url with the current requested size
     reqBody.data[0].url = reqBody.data[0].url.replace(/SIZE/g, size);
 
     if (nodeCount > 0) {
         reqBody.distribution.enabled = true;
-        reqBody.distribution.nodes = nodes.slice(0, nodeCount);
+        reqBody.distribution.nodes = reqBody.distribution.nodes.slice(0, nodeCount);
     }
     let params = {
         nodeCount: nodeCount,
@@ -105,61 +117,14 @@ var run = function (nodeCount, size)  {
     // });
 }
 
-var reqCount = process.argv[2] || 2;
-var nodeCount = process.argv[3] || 5;
+var reqCount = nconf.get('reqCount') || 3;
+var nodeCount = nconf.get('nodeCount') || 3;
 
-var sizes = [256, 512, 1024];
-
-// var list = [];
-// for (var i = 0; i < nodeCount; i++) {
-//     for (var j = 0; j < reqCount; j++) {
-//         let nodeCount = i;
-//         list.push(function (callback) {
-//             run(nodeCount, 256).then(
-//                 (res) => callback(null, res), 
-//                 (err)=> {console.log('Error', err)}
-//             );
-//         });
-//     }
-// }
-
-// // Run tests serially
-// async.series(list, (err, results) => {
-//     console.log('first done')
-//     let list = []
-//     for (var i = 0; i < nodeCount; i++) {
-//         for (var j = 0; j < reqCount; j++) {
-//             let nodeCount = i;
-//             list.push(function (callback) {
-//                 run(nodeCount, 512).then(
-//                     (res) => callback(null, res), 
-//                     (err)=> {console.log('Error', err)}
-//                 );
-//             });
-//         }
-//     }
-//     async.series(list, (err, results) => {
-//         console.log('second done')
-//         let list = []
-//         for (var i = 0; i < nodeCount; i++) {
-//             for (var j = 0; j < reqCount; j++) {
-//                 let nodeCount = i;
-//                 list.push(function (callback) {
-//                     run(nodeCount, 1024).then(
-//                         (res) => callback(null, res), 
-//                         (err)=> {console.log('Error', err)}
-//                     );
-//                 });
-//             }
-//         }
-//         async.series(list, (err, results) => {
-//             console.log('3rd done')
-//         });
-//     });
-// });
+var sizes = [256,512,1024];
 
 
 let loadList = function (index) {
+
     let list = []
     for (var i = 0; i < nodeCount; i++) {
         for (var j = 0; j < reqCount; j++) {
@@ -174,8 +139,8 @@ let loadList = function (index) {
     }
 
     async.series(list, (err, results) => {
-        console.log(sizes[index] + ' done', index)
-        
+        console.log(sizes[index] + ' done')
+
         index++;
         if (index < sizes.length) {
             loadList(index, sizes);
