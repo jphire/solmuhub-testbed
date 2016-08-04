@@ -1,0 +1,46 @@
+{
+    "solmuhub": {
+        "loopCount": 10,
+        "paths":{
+            "hubsPath":"/path/to/solmuhub",
+            "basePath":"/path/to/results",
+            "allPath":"/path/to/all/logs",
+            "latestPath":"/path/to/latest/results"
+        },
+        "urls":{
+            "baseUrl":"https://localhost",
+            "executableUrl": "https://localhost:3000/api/feeds/executable",
+    		"urlSuffix":"/api/feeds/executable",
+    		"controllerUrl": "https://localhost:3000/api/feeds/executable"
+    	},
+        "runPath":"/api/feeds/executable/1/run",
+        "executablePath":"/api/feeds/executable",
+        "controller": {
+            "url":"https://localhost",
+            "port":3000
+        },
+        "nodes":[
+            {
+                "url":"https://localhost",
+                "port":3000,
+                "controller": true
+            },
+            {
+                "url":"https://some.remote.host",
+                "port":3300
+            },
+            {
+                "url":"https://localhost",
+                "port":3400
+            },
+            {
+                "url":"https://some.other.remote/host",
+                "port":3500
+            },
+            {
+                "url":"https://localhost",
+                "port":3600
+            }
+        ]
+    }
+}
