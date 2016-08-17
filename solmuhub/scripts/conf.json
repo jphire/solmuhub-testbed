@@ -2,10 +2,10 @@
     "solmuhub": {
         "loopCount": 10,
         "paths":{
-            "hubsPath":"/Users/jphire/Code/node_projects/solmuhub",
-            "basePath":"/Users/jphire/Documents/Opiskelu/Thesis/testbed/solmuhub/results",
-            "allPath":"/Users/jphire/Documents/Opiskelu/Thesis/testbed/solmuhub/results/all",
-            "latestPath":"/Users/jphire/Documents/Opiskelu/Thesis/testbed/solmuhub/results/latest"
+            "hubsPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub",
+            "basePath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/solmuhub/results",
+            "allPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/solmuhub/results/all",
+            "latestPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/solmuhub/results/latest"
         },
         "urls":{
             "baseUrl":"https://localhost",
@@ -27,6 +27,10 @@
             },
             {
                 "url":"https://localhost",
+                "port":3200
+            },
+            {
+                "url":"https://localhost",
                 "port":3300
             },
             {
@@ -40,6 +44,18 @@
             {
                 "url":"https://localhost",
                 "port":3600
+            },
+            {
+                "url":"https://localhost",
+                "port":3700
+            },
+            {
+                "url":"https://localhost",
+                "port":3800
+            },
+            {
+                "url":"https://localhost",
+                "port":3900
             }
         ]
     }

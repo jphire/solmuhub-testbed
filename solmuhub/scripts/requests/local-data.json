@@ -14,7 +14,7 @@
             "type": "remote",
             "contentType":"image/jpeg",
             "processors":"jpegDecode",
-            "url": "http://localhost:4000/image/SIZE.jpg"
+            "url": "http://localhost:4000/api/feeds/executable/1?size=SIZE&nodes=1&index=1"
         }
   ],
   "distribution": {

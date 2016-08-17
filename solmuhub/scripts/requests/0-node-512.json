@@ -14,7 +14,7 @@
         "type": "remote",
         "processors": "jpegDecode",
         "contentType":"image/jpeg",
-        "url": "http://res.cloudinary.com/demo/image/upload/w_512,h_512/sample.jpg"
+        "url": "http://localhost:4000/api/feeds/1?size=1024&nodes=1&index=1"
       }
   ]
 }

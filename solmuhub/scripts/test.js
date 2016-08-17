@@ -45,6 +45,7 @@ loggers.profiler.forEach((logger, index, arr) => {
 var profiler = winston.loggers.get('profiler');
 var generic = winston.loggers.get('generic');
 var reqDataPath = './requests/' + nconf.get('data') + '-data';
+var reqBody = require(reqDataPath);
 
 // Get options for requests that are sent to controller
 var reqOptions = require(reqDataPath);
@@ -93,12 +94,13 @@ var sendRequest = function (requestBody, params) {
 }
 
 var run = function (nodeCount, size)  {
-
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    let reqBody = require(reqDataPath);
+    
     // replace SIZE in url with the current requested size
-    reqBody.data[0].url = reqBody.data[0].url.replace(/SIZE/g, size);
-
+    reqBody.data[0].url = "http://localhost:4000/api/feeds/executable/1?size=" + size + "&nodes=1&index=1";
+    // somehow this does not work:
+    //reqBody.data[0].url.replace(/SIZE/g, size);
+    
     if (nodeCount > 0) {
         reqBody.distribution.enabled = true;
         reqBody.distribution.nodes = reqBody.distribution.nodes.slice(0, nodeCount);
@@ -120,7 +122,7 @@ var run = function (nodeCount, size)  {
 var reqCount = nconf.get('reqCount') || 3;
 var nodeCount = nconf.get('nodeCount') || 3;
 
-var sizes = [256,512,1024];
+var sizes = [256, 512];
 
 
 let loadList = function (index) {
@@ -140,7 +142,6 @@ let loadList = function (index) {
 
     async.series(list, (err, results) => {
         console.log(sizes[index] + ' done')
-
         index++;
         if (index < sizes.length) {
             loadList(index, sizes);
