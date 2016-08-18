@@ -30,7 +30,7 @@ set xlabel "Number of nodes"
 
 set format y "%.0fms"
 
-set output '../../../src/Figures/latency.pdf'
+set output '../figures/latency.pdf'
 
 # set size 1.0, 1.0
 

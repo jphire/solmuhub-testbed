@@ -44,6 +44,7 @@ def run(filename, nodes, size):
 	return {'means':means}
 
 latest = 0
+# size must be given for the cli
 size = str(sys.argv[1])
 sizes = ['256', '512', '1024']
 nodeCount = sys.argv[2]

@@ -128,7 +128,10 @@ else:
 	shutil.rmtree(results_path)
 	os.makedirs(results_path)
 
-os.unlink('../results/latest')
+if os.path.exists('../results/latest'):
+	os.unlink('../results/latest')
+
+# symlink latest to point to the latest results
 os.symlink(results_path, '../results/latest')
 
 

@@ -3,7 +3,7 @@
 const exec = require('child_process').spawn;
 const execute = require('child_process').exec;
 const remoteConf = require('./remote-conf.json');
-const createExecFeed = require('./requests/createExecFeed.json');
+const createExecFeed = require('../requests/createExecFeed.json');
 const request = require('request');
 const path = require('path');
 

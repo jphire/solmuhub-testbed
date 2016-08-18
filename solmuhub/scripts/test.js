@@ -12,8 +12,8 @@ var fs = require('fs');
 var async = require('async');
 var winston = require('winston');
 var path = require('path');
-var loggers = require('./lib/loggers');
-var mkdirSync = require('./lib/mkdirSync');
+var loggers = require('../lib/loggers');
+var mkdirSync = require('../lib/mkdirSync');
 
 let nconf = require('nconf')
 nconf.env().argv();
@@ -44,11 +44,31 @@ loggers.profiler.forEach((logger, index, arr) => {
 
 var profiler = winston.loggers.get('profiler');
 var generic = winston.loggers.get('generic');
-var reqDataPath = './requests/' + nconf.get('data') + '-data';
+var reqDataPath = '../requests/' + nconf.get('data') + '-data';
 var reqBody = require(reqDataPath);
+var requestNodes = []
 
-// Get options for requests that are sent to controller
-var reqOptions = require(reqDataPath);
+// Array of ports to be excluded from the nodes list
+var exclude = [3000, 4000];
+var range = function (start, stop, step) {
+    var a=[start], b=start;
+    while(b<stop){b+=step;a.push(b)}
+    return a;
+};
+
+var reqCount = nconf.get('reqCount') || 3;
+var nodeCount = nconf.get('nodeCount') || 3;
+
+var sizes = [256, 512, 1024];
+
+// Create array 
+let arr = range(3300, 5300, 100);
+for (var i in arr) {
+    if (exclude.indexOf(arr[i]) == -1) {
+        let url = { url: "https://localhost:" + arr[i] + "/api/feeds/executable/1/run" };
+        requestNodes.push(url);
+    }
+}
 
 // Function for sending processing tasks to hubs
 var sendRequest = function (requestBody, params) {
@@ -103,8 +123,12 @@ var run = function (nodeCount, size)  {
     
     if (nodeCount > 0) {
         reqBody.distribution.enabled = true;
-        reqBody.distribution.nodes = reqBody.distribution.nodes.slice(0, nodeCount);
+        reqBody.distribution.nodes = requestNodes.slice(0, nodeCount);
+    } else {
+        reqBody.distribution.enabled = false;
+        reqBody.distribution.nodes = [];
     }
+    console.log(reqBody.distribution.nodes, nodeCount)
     let params = {
         nodeCount: nodeCount,
         size: size
@@ -119,16 +143,12 @@ var run = function (nodeCount, size)  {
     // });
 }
 
-var reqCount = nconf.get('reqCount') || 3;
-var nodeCount = nconf.get('nodeCount') || 3;
-
-var sizes = [256, 512];
-
 
 let loadList = function (index) {
 
     let list = []
-    for (var i = 0; i < nodeCount; i++) {
+    // We want to loop up to nodeCount, 0 nodeCount means no distribution
+    for (var i = 0; i <= nodeCount; i++) {
         for (var j = 0; j < reqCount; j++) {
             let nodeCount = i;
             list.push(function (callback) {

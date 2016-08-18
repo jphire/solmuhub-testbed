@@ -38,7 +38,7 @@ set yrange [0:100]
 
 set format y "%.0f%%"
 
-set output '../../../src/Figures/profiles.pdf'
+set output '../figures/profiles.pdf'
 
 set title "Profile"
 

@@ -27,7 +27,7 @@ set xlabel "Number of nodes"
 
 set format y "%.0f%%"
 
-set output '../../../src/Figures/cpu-512.pdf'
+set output '../figures/cpu-512.pdf'
 
 # set size 1.0, 1.0
 

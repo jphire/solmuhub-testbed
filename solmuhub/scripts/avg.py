@@ -95,13 +95,17 @@ for dirname, dirnames, filenames in os.walk(latest_path):
 # Create new timestamped folder in results
 results_path = '../results/' + str(latest)
 if not os.path.exists(results_path):
-    os.makedirs(results_path)
+	os.makedirs(results_path)
 else:
 	shutil.rmtree(results_path)
 	os.makedirs(results_path)
 
-os.unlink('../results/latest')
+if os.path.exists('../results/latest'):
+	os.unlink('../results/latest')
+
+# symlink latest to point to the latest results
 os.symlink(results_path, '../results/latest')
+
 
 profile_data = {}
 # Write new results to timestamped folder

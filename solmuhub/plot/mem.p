@@ -23,21 +23,21 @@ set offset 1.0,0,0,0
 
 set xtics 0,1,4
 set xrange [0:5]
-set ytics 0,20,100
-set yrange [0:100]
+set ytics 0,5,10
+set yrange [0:10]
 
 set xlabel "Number of nodes"
 
 set format y "%.0f%%"
 
-set output '../../../src/Figures/cpu.pdf'
+set output '../figures/mem.pdf'
 
 # set size 1.0, 1.0
 
-set title "CPU usage"
+set title "Memory usage"
 
 
-plot '../results/latest/cpu.out' u 2:3:4:xtic(1) ti '512x512 size JPG' ls 1, \
+plot '../results/latest/mem.out' u 2:3:4:xtic(1) ti '512x512 size JPG' ls 1, \
 	 '' u 6:7:8:xtic(1) ti '1024x1024 size JPG' ls 2
 
 unset output

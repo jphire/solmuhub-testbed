@@ -35,11 +35,11 @@ set xlabel "Number of nodes"
 
 set format y "%.0f%%"
 
-set output '../results/latest/cpu-1024.pdf'
+set output '../figures/mem-1024.pdf'
 
 # set size 1.0, 1.0
 
-set title "CPU usage"
+set title "Memory usage"
 
 
-plot "../results/latest/cpu-1024.out" using 1:2:3:4:5 lc 3
+plot "../results/latest/mem-1024.out" using 1:2:3:4:5 lc 3

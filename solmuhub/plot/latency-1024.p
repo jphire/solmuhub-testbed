@@ -1,6 +1,9 @@
 set encoding utf8
 
 set terminal pdf
+#set terminal postscript eps
+#set output '| epstopdf --filter --outfile=plot.pdf'
+
 
 #set term pdfcairo enhanced color solid font "Helvetica,24" linewidth 1.5 dashlength 1.5 size 6in,4in
 #set terminal postscript portrait enhanced mono dashed lw 1 "Helvetica" 14
@@ -26,15 +29,17 @@ set xrange [0:21]
 #set ytics 0,10,100
 #set yrange [0:100]
 
+#set ylabel "Latency"
+# set y2label "Kahvihub execution time (ms)"
 set xlabel "Number of nodes"
 
 set format y "%.0fms"
 
-set output '../results/latest/latency-512.pdf'
+set output '../figures/latency-1024.pdf'
 
 # set size 1.0, 1.0
 
 set title "Latency"
 
 
-plot "../results/latest/latency-512.out" using 1:2:3:4:5 lc 3
+plot "../results/latest/latency-1024.out" using 1:2:3:4:5 lc 3
