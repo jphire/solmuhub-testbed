@@ -11,8 +11,9 @@ set style data histograms
 set style fill solid 0.5
 set bars front
 
-set style line 1 lc rgb "#555555" lw 2.0 ps 1.0 pi 1
-set style line 2 lc rgb "#000000" lw 2.0 ps 1.0 pi 1
+set style line 1 lc rgb "#888888" lw 2.0 ps 1.0 pi 1
+set style line 2 lc rgb "#555555" lw 2.0 ps 1.0 pi 1
+set style line 3 lc rgb "#111111" lw 2.0 ps 1.0 pi 1
 
 #set nokey
 
@@ -22,7 +23,7 @@ set ytics out nomirror
 set offset 1.0,0,0,0
 
 set xtics 0,1,4
-set xrange [0:5]
+set xrange [0:9]
 set ytics 0,5,10
 set yrange [0:10]
 
@@ -37,8 +38,9 @@ set output '../figures/mem.pdf'
 set title "Memory usage"
 
 
-plot '../results/latest/mem.out' u 2:3:4:xtic(1) ti '512x512 size JPG' ls 1, \
-	 '' u 6:7:8:xtic(1) ti '1024x1024 size JPG' ls 2
+plot '../results/latest/mem.out' u 2:3:4:xtic(1) ti '256x256 size JPG' ls 1, \
+	 '' u 6:7:8:xtic(1) ti '512x512 size JPG' ls 2, \
+	 '' u 10:11:12:xtic(1) ti '1024x1024 size JPG' ls 3
 
 unset output
 reset

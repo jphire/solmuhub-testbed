@@ -25,6 +25,15 @@ def mean_confidence_interval(data, confidence=0.95):
     h = se * sp.stats.t._ppf((1+confidence)/2., n-1)
     return m, m-h, m+h
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+    except:
+	return False
+
 def run(filename, nodes, size):
 	dataMap = {}
 	profile = {}
@@ -33,13 +42,16 @@ def run(filename, nodes, size):
 	memData = []
 	latencyData = []
 	content_length = []
+	profile['after_response'] = []
+
 	with open(filename) as file:
 		for line in file:
 			data = json.loads(line)['profiler']['data']
 			latency = json.loads(line)['profiler']['latency']
 			for key, val in data.items():
 				usage = val[0]['usage']
-				cpuData.append(usage['cpu'])
+				if is_number(usage['cpu']):
+					cpuData.append(usage['cpu'])
 				memData.append(usage['mem'])
 				latencyData.append(latency)
 				# payload data
@@ -51,6 +63,7 @@ def run(filename, nodes, size):
 					profile[key] = []
 				for value in val:
 					profile[key].append(value['time'])
+			profile['after_response'].append(int(latency))
 
 	for tag, val in profile.items():
 		means[tag] = mean_confidence_interval(val)
@@ -58,8 +71,11 @@ def run(filename, nodes, size):
 	mem = mean_confidence_interval(memData)
 	cpu = mean_confidence_interval(cpuData)
 	latency = mean_confidence_interval(latencyData)
-	payload = [1,2,3]
-	# payload = mean_confidence_interval(content_length)
+	
+	if len(content_length) > 0: 
+		payload = mean_confidence_interval(map(int, content_length))
+	else:
+		payload = []
 
 	return {'nodes':nodes, 'size':size, 'cpu':cpu, 'mem':mem, 'latency':latency, 'payload':payload, 'profile':means}
 
@@ -90,7 +106,7 @@ for dirname, dirnames, filenames in os.walk(latest_path):
 		if n not in nodes:
 			nodes.append(n)
 
-
+sizes.sort(key=int)
 
 # Create new timestamped folder in results
 results_path = '../results/' + str(latest)
@@ -133,7 +149,7 @@ for size in sizes:
 
 tags_data = {}
 for node in range(0, len(nodes)):
-	profile_file = os.path.join(results_path, str(node) + '-' + 'profile')
+	profile_file = os.path.join(results_path, str(node) + '-' + 'profile-lines')
 	with open(profile_file, 'a') as prof:
 		prof.write("\t".join(["Index", "State", str(node) + "-256", "Min","Max", str(node) + "-512", "Min","Max","\n"]))
 		for i, tag in enumerate(tags):

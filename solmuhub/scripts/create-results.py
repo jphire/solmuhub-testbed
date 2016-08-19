@@ -102,14 +102,14 @@ def prettify(tag):
 	return tags_map[tag]
 
 
-# Get latest raw results' directory path
+# Get latest log files' timestamped path
 for dirname, dirnames, filenames in os.walk('../logs/profiler'):
 	for subdirname in dirnames:	
 		tmp = int(subdirname)
 		latest = max(latest, tmp)
 		latest_path = os.path.join(dirname, str(latest))
 
-# Get node count and sizes from the raw results folder
+# Get node count and sizes from the logs
 for dirname, dirnames, filenames in os.walk(latest_path):
 	for name in filenames:
 		n = name.split('-')[0]
@@ -133,6 +133,9 @@ if os.path.exists('../results/latest'):
 
 # symlink latest to point to the latest results
 os.symlink(results_path, '../results/latest')
+
+# Sort sizes so that results are in correct format for plotting
+sizes.sort(key=int)
 
 
 # Write new results to timestamped folder
@@ -183,7 +186,7 @@ for node in range(0, len(nodes)):
 # Aggregate data to plottable files
 tags_data = {}
 for node in range(0, len(nodes)):
-	profile_file = os.path.join(results_path, str(node) + '-' + 'profile')
+	profile_file = os.path.join(results_path, str(node) + '-' + 'profile-stacked')
 	with open(profile_file, 'a') as prof:
 		prof.write("Size\t")
 		if node == 0:
