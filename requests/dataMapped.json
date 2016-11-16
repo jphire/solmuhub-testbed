@@ -1,0 +1,75 @@
+{
+	"name": "DataMappedJpeg",
+	"description": "URL mapped JPEG distributed image processing test",
+	"requestsPerType": 1,
+	"sizes":[512],
+	"maxNodesArr": [0, 1, 2, 4, 8],
+	"excludedPorts":[3000],
+	"controller": {
+		"url":"https://localhost",
+		"port":3000
+	},
+	"imageServerUrl": "http://localhost:9000/api/feeds/executable/1?size=SIZE&nodes=1&index=1",
+	"runPath":"/api/feeds/executable/1/run",
+	"request": {
+		"name": "image-processing",
+		"source": "var decoded=data.feed;var i=0;while(i<decoded.data.length){decoded.data[i++]=120; decoded.data[i++]=decoded.data[i];decoded.data[i++]=decoded.data[i];decoded.data[i++]=0xFF;};decoded",
+		"profiler": {
+			"enabled": true
+		},
+		"response": {
+			"processors": [
+				"jpegEncode"
+			],
+			"contentType": "image/jpeg"
+		},
+		"data": [
+			{
+				"name": "feed",
+				"type": "local",
+				"contentType": "image/jpeg",
+				"processors": "jpegDecode",
+				"url": "http://localhost:4000/api/feeds/executable/1?size=SIZE&nodes=1&index=1",
+				"maxNodes": 2
+			}
+		],
+		"distribution": {
+			"enabled": false,
+			"maxDepth": 1,
+			"mapper": "imageDataMapper",
+			"reducer": "imageReducer",
+			"nodes": [
+				{
+					"url":"https://localhost:3100/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3200/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3300/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3400/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3500/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3600/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3700/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3800/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:3900/api/feeds/executable/1/run"
+				},
+				{
+					"url":"https://localhost:4000/api/feeds/executable/1/run"
+				}
+			]
+		}
+	}
+}

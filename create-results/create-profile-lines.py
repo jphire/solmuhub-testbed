@@ -34,6 +34,10 @@ def is_number(s):
     except:
 	return False
 
+''' Calculates mean cpu, memory and latency from the log files' data.
+	Only calculates one level currently, not taking into account piecesData element,
+	which includes child nodes' profiling info.
+'''
 def run(filename, nodes, size):
 	dataMap = {}
 	profile = {}
@@ -50,15 +54,19 @@ def run(filename, nodes, size):
 			latency = json.loads(line)['profiler']['latency']
 			for key, val in data.items():
 				usage = val[0]['usage']
+				
+				# Have to check, because may be undefined
 				if is_number(usage['cpu']):
 					cpuData.append(usage['cpu'])
 				memData.append(usage['mem'])
 				latencyData.append(latency)
-				# payload data
-				if ('contentLength' in val[0]):
-					content_length.append(val[0]['contentLength'])
+				
+				# Record payload length information
+				if (key == 'piece_response_latency'):
+					if ('contentLength' in val[0]):
+						content_length.append(val[0]['contentLength'])
 
-				# profiling data
+				# Profiling information
 				if not key in profile:
 					profile[key] = []
 				for value in val:
@@ -79,6 +87,8 @@ def run(filename, nodes, size):
 
 	return {'nodes':nodes, 'size':size, 'cpu':cpu, 'mem':mem, 'latency':latency, 'payload':payload, 'profile':means}
 
+
+
 def prettify(tag):
 	return tag.replace('_', '-').capitalize()
 
@@ -89,14 +99,14 @@ nodes = []
 types = ['cpu', 'mem', 'latency', 'payload']
 tags = ['feed_fetched', 'after_data_fetch', 'after_data_map', 'execution_end', 'piece_response_latency', 'dist_response_latency', 'after_reducer', 'before_sending_response']
 
-# Get latest raw results' directory path
+# Find latest logged results' directory path
 for dirname, dirnames, filenames in os.walk('../logs/profiler'):
 	for subdirname in dirnames:	
 		tmp = int(subdirname)
 		latest = max(latest, tmp)
 		latest_path = os.path.join(dirname, str(latest))
 
-# Get node count and sizes from the raw results folder
+# Deduce node count and sizes automatically from the logged results folder
 for dirname, dirnames, filenames in os.walk(latest_path):
 	for name in filenames:
 		n = name.split('-')[0]
@@ -106,6 +116,7 @@ for dirname, dirnames, filenames in os.walk(latest_path):
 		if n not in nodes:
 			nodes.append(n)
 
+# Sort sizes to make it easy to plot nice charts
 sizes.sort(key=int)
 
 # Create new timestamped folder in results
@@ -119,18 +130,23 @@ else:
 if os.path.exists('../results/latest'):
 	os.unlink('../results/latest')
 
-# symlink latest to point to the latest results
+# Symlink 'latest' dir to point to the latest results
 os.symlink(results_path, '../results/latest')
 
 
 profile_data = {}
+
 # Write new results to timestamped folder
 for size in sizes:
 	for node in range(0, len(nodes)):
 		filename = "-".join([str(node), 'node', size]) 
+		
+		# Calculate the key indicators
 		ret = run(os.path.join(latest_path, filename), str(node), str(size))
+		
 		if node not in profile_data:
 			profile_data[node] = {}
+
 		profile_data[node][size] = ret['profile']
 		profile_file = os.path.join(results_path, str(node) + "-" + str(size) + '-profile')
 		with open(profile_file, 'a') as prof:

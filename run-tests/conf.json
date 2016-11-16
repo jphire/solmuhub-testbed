@@ -1,12 +1,13 @@
 {
     "solmuhub": {
-        "loopCount": 10,
         "paths":{
             "hubsPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub",
-            "basePath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/solmuhub/results",
-            "allPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/solmuhub/results/all",
-            "latestPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/solmuhub/results/latest"
+            "basePath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results",
+            "allPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results/all",
+            "latestPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results/latest"
         },
+        "excludedPorts":[3000],
+        "testRunFiles": ["urlMapped", "nestedTwoLevelUrlMapped1"],
         "urls":{
             "baseUrl":"https://localhost",
             "executableUrl": "https://localhost:3000/api/feeds/executable",
@@ -24,6 +25,10 @@
                 "url":"https://localhost",
                 "port":3000,
                 "controller": true
+            },
+            {
+                "url":"https://localhost",
+                "port":3100
             },
             {
                 "url":"https://localhost",
@@ -56,6 +61,10 @@
             {
                 "url":"https://localhost",
                 "port":3900
+            },
+            {
+                "url":"https://localhost",
+                "port":4000
             },
             {
                 "url":"https://localhost",

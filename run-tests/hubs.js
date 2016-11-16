@@ -5,7 +5,6 @@ const execute = require('child_process').exec;
 const remoteConf = require('./remote-conf.json');
 const createExecFeed = require('../requests/createExecFeed.json');
 const request = require('request');
-const path = require('path');
 
 let children = [];
 
@@ -22,6 +21,24 @@ nconf.required(['solmuhub']);
 
 let conf = nconf.get('solmuhub');
 let hubs = conf.nodes;
+
+// var exclude = [3000, 4000];
+// var range = function (start, stop, step) {
+//     var a=[start], b=start;
+//     while(b<stop){b+=step;a.push(b)}
+//     return a;
+// };
+
+// // Create array 
+// let arr = range(3300, 5300, 100);
+// for (var i in arr) {
+//     if (exclude.indexOf(arr[i]) == -1) {
+//         let url = { url: "https://localhost:" + arr[i] + "/api/feeds/executable/1/run" };
+//         nodes.push(url);
+//     }
+// }
+
+
 let ports = conf.ports;
 
 let hubExecPath = conf.paths.hubsPath;
@@ -30,7 +47,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 if (nconf.get('type') === 'remote') {
 	console.log('Setting up remote hubs');
-	let hubs = conf.nodes;
 	hubs.forEach((hub) => {
 		let url = hub.url + '/1/run';
 		let opts = {
@@ -51,7 +67,7 @@ if (nconf.get('type') === 'remote') {
 	});
 	
 } else {
-	console.log('Setting local hubs up');
+	console.log('Setting up local hubs');
 
 	let child;
 	hubs.forEach((hub) => {

@@ -1,2 +1,0 @@
-%{time_namelookup}\t\t%{time_connect}\t\t%{time_appconnect}\t\t%{time_pretransfer}\t\t%{time_redirect}\t\t%{time_starttransfer}\t\t%{time_total}\n
-
