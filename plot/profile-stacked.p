@@ -42,12 +42,12 @@ set output '../figures/profiles.pdf'
 
 set title "Profile"
 
-plot newhistogram "0-Nodes" lt 6, '../results/latest/0-profile-stacked' u (100.*$2/$5):xtic(1) ti column(2), for [i=3:5] '' using (100.*column(i)/$5) title column(i), \
-     newhistogram "1-Nodes" lt 1, '../results/latest/1-profile-stacked' u (100.*$2/$9):xtic(1) ti column(2), for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) ti column(i), \
-	 newhistogram "2-Nodes" lt 1, '../results/latest/2-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-	 newhistogram "4-Nodes" lt 1, '../results/latest/4-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-	 newhistogram "6-Nodes" lt 1, '../results/latest/6-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-	 newhistogram "8-Nodes" lt 1, '../results/latest/8-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+plot newhistogram "0-Nodes" lt 6, '../results/latest/0-nodes-1-depth-profile-stacked' u (100.*$2/$5):xtic(1) ti column(2), for [i=3:5] '' using (100.*column(i)/$5) title column(i), \
+     newhistogram "1-Nodes" lt 1, '../results/latest/1-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) ti column(2), for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) ti column(i), \
+	 newhistogram "2-Nodes" lt 1, '../results/latest/2-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+	 #newhistogram "4-Nodes" lt 1, '../results/latest/4-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+	 #newhistogram "6-Nodes" lt 1, '../results/latest/6-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+	 #newhistogram "8-Nodes" lt 1, '../results/latest/8-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
 
 
 #plot newhistogram "0-Nodes" lt 1, '../results/latest/0-profile' u "Feed-fetched":xtic(1) ti col, '' u "After-data-fetch" t col, '' u "Execution-end" t col lt 8, '' u "Before-sending-response" t col lt 7, \

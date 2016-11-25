@@ -224,7 +224,7 @@ class Lib {
 
     static runTest(options) {
         let nodes = JSON.parse(JSON.stringify(options.confs[0].request.distribution.nodes));
-        console.log(options.confs[0].request.distribution.nodes[0])
+
         Lib.loadList(options.confs, nodes, options.timestamp);
     }
 

@@ -40,6 +40,7 @@ let timestamp = Date.now() + '';
 
 try {
     mkdirSync.do(path.join(__dirname, '../logs', 'profiler', timestamp+''));
+    mkdirSync.do(path.join(__dirname, '../logs', 'profiler', timestamp + '/spec'));
 } catch (e) {
     e.message = 'Could not create the logs directory: ' + e.message;
     throw e;
@@ -63,7 +64,14 @@ const generic = winston.loggers.get('generic');
 // Get test configuration files to be used in test. An array of confs to be run serially on all nodes
 const testFiles = conf.testRunFiles;
 let testConfs = testFiles.map((req) => {
+    // Write test configuration to spec file
+    let testSpecFile = req + '.json';
+    let filename = '../logs/profiler/' + timestamp + '/spec/' + testSpecFile;
+    // Write results to log files
+    fs.createReadStream('../requests/' + req + '.json').pipe(fs.createWriteStream(filename));
+
     return require('../requests/' + req);
+
 });
 
 let options = {

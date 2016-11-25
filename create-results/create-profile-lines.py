@@ -62,9 +62,9 @@ def run(filename, nodes, size):
 				latencyData.append(latency)
 				
 				# Record payload length information
-				if (key == 'piece_response_latency'):
-					if ('contentLength' in val[0]):
-						content_length.append(val[0]['contentLength'])
+				# if (key == 'piece_response_latency'):
+				if ('contentLength' in val[0]):
+					content_length.append(val[0]['contentLength'])
 
 				# Profiling information
 				if not key in profile:
@@ -84,6 +84,7 @@ def run(filename, nodes, size):
 		payload = mean_confidence_interval(map(int, content_length))
 	else:
 		payload = []
+	print payload
 
 	return {'nodes':nodes, 'size':size, 'cpu':cpu, 'mem':mem, 'latency':latency, 'payload':payload, 'profile':means}
 
@@ -96,28 +97,39 @@ latest = 0
 # size = str(sys.argv[1])
 sizes = []
 nodes = []
+depths = []
 types = ['cpu', 'mem', 'latency', 'payload']
 tags = ['feed_fetched', 'after_data_fetch', 'after_data_map', 'execution_end', 'piece_response_latency', 'dist_response_latency', 'after_reducer', 'before_sending_response']
 
 # Find latest logged results' directory path
 for dirname, dirnames, filenames in os.walk('../logs/profiler'):
 	for subdirname in dirnames:	
-		tmp = int(subdirname)
-		latest = max(latest, tmp)
-		latest_path = os.path.join(dirname, str(latest))
+		try:
+			tmp = int(subdirname)
+			latest = max(latest, tmp)
+			latest_path = os.path.join(dirname, str(latest))
+		except ValueError:
+			continue
 
 # Deduce node count and sizes automatically from the logged results folder
 for dirname, dirnames, filenames in os.walk(latest_path):
 	for name in filenames:
-		n = name.split('-')[0]
-		s = name.split('-')[2]
-		if s not in sizes:
-			sizes.append(s)
-		if n not in nodes:
-			nodes.append(n)
+		try:
+			n = name.split('-')[0]
+			s = name.split('-')[3]
+			depth = name.split('-')[5]
+			if s not in sizes:
+				sizes.append(s)
+			if n not in nodes:
+				nodes.append(n)
+			if depth not in depths:
+				depths.append(depth)
+		except IndexError:
+			continue
 
 # Sort sizes to make it easy to plot nice charts
 sizes.sort(key=int)
+depths.sort(key=int)
 
 # Create new timestamped folder in results
 results_path = '../results/' + str(latest)
@@ -137,31 +149,35 @@ os.symlink(results_path, '../results/latest')
 profile_data = {}
 
 # Write new results to timestamped folder
-for size in sizes:
-	for node in range(0, len(nodes)):
-		filename = "-".join([str(node), 'node', size]) 
-		
-		# Calculate the key indicators
-		ret = run(os.path.join(latest_path, filename), str(node), str(size))
-		
-		if node not in profile_data:
-			profile_data[node] = {}
+for depth in depths:
+	for size in sizes:
+		for node in range(0, len(nodes)):
 
-		profile_data[node][size] = ret['profile']
-		profile_file = os.path.join(results_path, str(node) + "-" + str(size) + '-profile')
-		with open(profile_file, 'a') as prof:
-			means = ret['profile']
-			for tag in tags:
-				if tag in means.keys():
-					# print "\t".join([tag, str(means[tag][0]), str(means[tag][1]), str(means[tag][2]), "0.6", "\n"])
-					prof.write("\t".join([tag, str(means[tag][0]), str(means[tag][1]), str(means[tag][2]), "\n"]))
+			filename = "-".join([str(node), 'node', 'url', size, 'depth', depth])
 
-		for name in types:
-			outfile = os.path.join(results_path, name + "-" + str(size))
+			# Calculate the key indicators
+			ret = run(os.path.join(latest_path, filename), str(node), str(size))
 
-			with open(outfile, 'a') as out:
-				# print outfile, "\t".join([ret['nodes'], str(ret[name][0]), str(ret[name][1]), str(ret[name][2])])
-				out.write("\t".join([ret['nodes'], str(ret[name][0]), str(ret[name][1]), str(ret[name][2]), "0.6", "\n"]))
+			if node not in profile_data:
+				profile_data[node] = {}
+
+			profile_data[node][size] = ret['profile']
+			profile_file = os.path.join(results_path, str(node) + "-" + str(size) + '-profile')
+			with open(profile_file, 'a') as prof:
+				means = ret['profile']
+				for tag in tags:
+					if tag in means.keys():
+						# print "\t".join([tag, str(means[tag][0]), str(means[tag][1]), str(means[tag][2]), "0.6", "\n"])
+						prof.write("\t".join([tag, str(means[tag][0]), str(means[tag][1]), str(means[tag][2]), "\n"]))
+
+			for name in types:
+				outfile = os.path.join(results_path, name + "-" + str(size))
+
+				with open(outfile, 'a') as out:
+					# print outfile, "\t".join([ret['nodes'], str(ret[name][0]), str(ret[name][1]), str(ret[name][2])])
+					if len(ret[name]) == 3:
+						out.write("\t".join([ret['nodes'], str(ret[name][0]), str(ret[name][1]), str(ret[name][2]), "0.6", "\n"]))
+
 
 tags_data = {}
 for node in range(0, len(nodes)):

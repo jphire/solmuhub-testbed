@@ -45,14 +45,14 @@ set title "Profile"
 #plot '../results/latest/0-profile' u 2:3:4:xtic(1) ti '256x256 size JPG' ls 1, \
 #	 '../results/latest/0-profile' u 6:7:8:xtic(1) ti '512x512 size JPG' ls 2, \
 
-plot '../results/latest/1-profile' u 1:3:xtic(2) ti '1 node' ls 1, \
+plot '../results/latest/1-profile-lines' u 1:3:xtic(2) ti '1 node' ls 1, \
 	 '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
-	 '../results/latest/2-profile' u 1:3:xtic(2) ti '2 nodes' ls 2, \
+	 '../results/latest/2-profile-lines' u 1:3:xtic(2) ti '2 nodes' ls 2, \
 	 '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
-	 '../results/latest/3-profile' u 1:3:xtic(2) ti '3 nodes' ls 3, \
-	 '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
-	 '../results/latest/4-profile' u 1:3:xtic(2) ti '4 nodes' ls 4, \
-	 '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
+	# '../results/latest/3-profile' u 1:3:xtic(2) ti '3 nodes' ls 3, \
+	# '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
+	# '../results/latest/4-profile' u 1:3:xtic(2) ti '4 nodes' ls 4, \
+	# '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
 	#'../results/latest/1-profile' u 1:6:xtic(2) ti '1 node' ls 1, \
 	#'' u 1:6:7:8 w yerrorbars ls 5 notitle, \
 	#'../results/latest/2-profile' u 1:6:xtic(2) ti '2 nodes' ls 2, \
