@@ -1,0 +1,141 @@
+{
+  "name": "test2",
+  "description": "Testbed test 2, level one Data distributed execution",
+  "requestsPerType": 20,
+  "sizes":[256, 512, 1024],
+  "maxNodesArr": [0, 1, 2, 4, 8],
+  "excludedPorts":[3000],
+  "controller": {
+	"url":"https://localhost",
+	"port":3000
+  },
+  "imageServerUrl": "http://localhost:9000/api/feeds/executable/1?size=SIZE&nodes=1&index=1",
+  "runPath":"/api/feeds/executable/1/run",
+  "request": {
+	"name": "image-processing",
+	"source": "var decoded=data.feed;var i=0;while(i<decoded.data.length){decoded.data[i++]=120; decoded.data[i++]=decoded.data[i];decoded.data[i++]=decoded.data[i];decoded.data[i++]=0xFF;};decoded",
+	"profiler": {
+	  "enabled": true
+	},
+	"response": {
+	  "processors": [
+		"jpegEncode"
+	  ],
+	  "contentType": "image/jpeg"
+	},
+	"data": [
+	  {
+		"name": "feed",
+		"type": "local",
+		"contentType": "image/jpeg",
+		"processors": "jpegDecode",
+		"url": "http://localhost:9000/api/feeds/executable/1?size=SIZE&nodes=1&index=1",
+		"maxNodes": 1
+	  }
+	],
+	"distribution": {
+	  "enabled": true,
+	  "maxDepth": 1,
+	  "mapper": "imageDataMapper",
+	  "reducer": "imageReducer",
+	  "nodes": [
+		{
+		  "url":"https://192.168.1.30:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.102:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.44:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.209:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.68:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.175:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.194:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.233:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.214:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.89:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.121:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.154:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.243:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.84:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.252:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.192:3000/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.30:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.44:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.102:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.209:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.68:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.175:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.194:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.233:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.214:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.89:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.121:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.154:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.243:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.84:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.252:3100/api/feeds/executable/1/run"
+		},
+		{
+		  "url":"https://192.168.1.192:3100/api/feeds/executable/1/run"
+		}
+	  ]
+	}
+  }
+}

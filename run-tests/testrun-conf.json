@@ -1,0 +1,28 @@
+{
+  "solmuhub": {
+	"paths": {
+	  "hubsPath": "/Users/janne.laukkanen/Code/node-projects/solmuhub",
+	  "basePath": "/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results",
+	  "allPath": "/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results/all",
+	  "latestPath": "/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results/latest"
+	},
+	"excludedPorts": [
+	  3000
+	],
+	"testRunFiles": [
+	  "test1", "test2", "test3", "test5", "test6"
+	],
+	"urls": {
+	  "baseUrl": "https://localhost",
+	  "executableUrl": "https://localhost:3000/api/feeds/executable",
+	  "urlSuffix": "/api/feeds/executable",
+	  "controllerUrl": "https://localhost:3000/api/feeds/executable"
+	},
+	"runPath": "/api/feeds/executable/1/run",
+	"executablePath": "/api/feeds/executable",
+	"controller": {
+	  "url": "https://localhost",
+	  "port": 3000
+	}
+  }
+}
