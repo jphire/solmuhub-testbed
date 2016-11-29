@@ -11,7 +11,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const request = require('request').defaults({ 
         strictSSL: false,
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        timeout: 120000
 });
 const fs = require('fs');
 const async = require('async');

@@ -7,7 +7,7 @@
             "latestPath":"/Users/janne.laukkanen/Code/node-projects/solmuhub-testbed/results/latest"
         },
         "excludedPorts":[3000],
-        "testRunFiles": ["smallTest"],
+        "testRunFiles": ["test1", "test3", "test5"],
         "urls":{
             "baseUrl":"https://localhost",
             "executableUrl": "https://localhost:3000/api/feeds/executable",

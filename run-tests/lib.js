@@ -2,7 +2,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 var request = require('request').defaults({
 	strictSSL: false,
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        timeout: 120000
 });
 const fs = require('fs');
 const async = require('async');
@@ -109,6 +110,7 @@ class Lib {
         let options = {
             method: 'POST',
             strictSSL: false,
+            timeout: 120000,
             rejectUnauthorized: false,
             uri: params.uri,
             body: JSON.stringify(requestBody),

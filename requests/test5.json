@@ -1,9 +1,9 @@
 {
   "name": "test5",
   "description": "Testbed test 5, nested, 3 level, 2 per level, URL distributed execution",
-  "requestsPerType": 20,
+  "requestsPerType": 1,
   "sizes":[256, 512, 1024],
-  "maxNodesArr": [0, 1, 2, 3, 4],
+  "maxNodesArr": [0, 2, 3, 4],
   "excludedPorts":[3000],
   "controller": {
 	"url":"https://localhost",

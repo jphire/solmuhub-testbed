@@ -1,9 +1,9 @@
 {
   "name": "test2",
   "description": "Testbed test 2, level one Data distributed execution",
-  "requestsPerType": 20,
-  "sizes":[256, 512, 1024],
-  "maxNodesArr": [0, 1, 2, 4, 8],
+  "requestsPerType": 1,
+  "sizes":[256],
+  "maxNodesArr": [0, 2, 4, 8],
   "excludedPorts":[3000],
   "controller": {
 	"url":"https://localhost",
