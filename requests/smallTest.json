@@ -1,9 +1,9 @@
 {
-  "name": "test2",
-  "description": "Testbed test 2, level one Data distributed execution",
-  "requestsPerType": 20,
-  "sizes":[256, 512, 1024],
-  "maxNodesArr": [0, 1, 2, 4, 8],
+  "name": "smallTest",
+  "description": "Testbed test 1, level one URL distributed execution",
+  "requestsPerType": 1,
+  "sizes":[256],
+  "maxNodesArr": [1, 2],
   "excludedPorts":[3000],
   "controller": {
 	"url":"https://localhost",
@@ -26,7 +26,7 @@
 	"data": [
 	  {
 		"name": "feed",
-		"type": "local",
+		"type": "remote",
 		"contentType": "image/jpeg",
 		"processors": "jpegDecode",
 		"url": "http://localhost:4000/api/feeds/executable/1?size=SIZE&nodes=1&index=1",
@@ -36,11 +36,11 @@
 	"distribution": {
 	  "enabled": true,
 	  "maxDepth": 1,
-	  "mapper": "imageDataMapper",
+	  "mapper": "imageUrlMapper",
 	  "reducer": "imageReducer",
 	  "nodes": [
 		{
-		  "url":"https://192.168.1.30:3000/api/feeds/executable/1/run"
+		  "url":"https://192.168.1.31:3000/api/feeds/executable/1/run"
 		},
 		{
 		  "url":"https://192.168.1.102:3000/api/feeds/executable/1/run"

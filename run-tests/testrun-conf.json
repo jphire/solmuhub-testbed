@@ -10,7 +10,7 @@
 	  3000
 	],
 	"testRunFiles": [
-	  "test1", "test2", "test3", "test5", "test6"
+	  "smallTest"
 	],
 	"urls": {
 	  "baseUrl": "https://localhost",

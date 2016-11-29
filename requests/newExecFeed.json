@@ -1,0 +1,8 @@
+{
+  "name":"execFeed1",
+  "source":"var s=2;",
+  "response":{
+    "metadata":false
+  },
+  "data":[]
+}

@@ -7,7 +7,12 @@
  * total amount of hubs and imageSize is the amount of pixels per side in test data.
  */
 
-const request = require('request');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+const request = require('request').defaults({ 
+        strictSSL: false,
+        rejectUnauthorized: false
+});
 const fs = require('fs');
 const async = require('async');
 const winston = require('winston');

@@ -1,4 +1,9 @@
-const request = require('request');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+var request = require('request').defaults({
+	strictSSL: false,
+        rejectUnauthorized: false
+});
 const fs = require('fs');
 const async = require('async');
 const winston = require('winston');
@@ -6,6 +11,8 @@ const path = require('path');
 const loggers = require('../lib/loggers');
 
 const nconf = require('nconf');
+
+
 
 class Lib {
     constructor() {
@@ -101,6 +108,8 @@ class Lib {
 
         let options = {
             method: 'POST',
+            strictSSL: false,
+            rejectUnauthorized: false,
             uri: params.uri,
             body: JSON.stringify(requestBody),
             headers: {
@@ -111,7 +120,7 @@ class Lib {
         let maxDepth = (requestBody.distribution && requestBody.distribution.maxDepth) || 0;
 
         return new Promise((resolve, reject) => {
-            console.log('SEND', options.body)
+            console.log('SEND', options)
             let start = new Date().getTime();
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             request(options, function (error, response, body) {
