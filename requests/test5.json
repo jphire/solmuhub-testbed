@@ -1,7 +1,7 @@
 {
   "name": "test5",
   "description": "Testbed test 5, nested, 3 level, 2 per level, URL distributed execution",
-  "requestsPerType": 1,
+  "requestsPerType": 10,
   "sizes":[256, 512, 1024],
   "maxNodesArr": [0, 2, 3, 4],
   "excludedPorts":[3000],
