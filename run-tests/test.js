@@ -8,13 +8,16 @@
  */
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+const fs = require('fs');
 
 const request = require('request').defaults({ 
         strictSSL: false,
         rejectUnauthorized: false,
-        timeout: 120000
+        timeout: 120000,
+        agentOptions: {
+         ca:  fs.readFileSync('../../solmuhub/private/certificate.pem')
+        }
 });
-const fs = require('fs');
 const async = require('async');
 const winston = require('winston');
 const path = require('path');
