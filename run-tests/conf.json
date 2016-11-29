@@ -17,7 +17,7 @@
         "runPath":"/api/feeds/executable/1/run",
         "executablePath":"/api/feeds/executable",
         "controller": {
-            "url":"https://localhost",
+            "url":"http://localhost",
             "port":3000
         },
         "nodes":[
