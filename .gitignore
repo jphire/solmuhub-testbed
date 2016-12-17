@@ -10,3 +10,5 @@ figures/
 local-conf.json
 
 .idea/
+
+*.pyc
