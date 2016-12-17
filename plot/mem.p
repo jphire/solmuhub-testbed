@@ -23,9 +23,9 @@ set ytics out nomirror
 set offset 1.0,0,0,0
 
 set xtics 0,1,4
-set xrange [0:9]
-set ytics 0,5,10
-set yrange [0:10]
+set xrange [0:6]
+set ytics 0,10,100
+set yrange [1:50]
 
 set xlabel "Number of nodes"
 
@@ -33,14 +33,16 @@ set format y "%.0f%%"
 
 set output '../figures/mem.pdf'
 
+# set logscale y 2
+
 # set size 1.0, 1.0
 
 set title "Memory usage"
 
 
-plot '../results/latest/mem.out' u 2:3:4:xtic(1) ti '256x256 size JPG' ls 1, \
-	 '' u 6:7:8:xtic(1) ti '512x512 size JPG' ls 2, \
-	 '' u 10:11:12:xtic(1) ti '1024x1024 size JPG' ls 3
+plot '../results/latest/mem.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
+	 '' u 6:7:8:xtic(1) ti '512x512 JPG' ls 2, \
+	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
 
 unset output
 reset
