@@ -6,7 +6,7 @@ import shutil
 
 '''
 This script is used to get the averages and confidence intervals of latency and CPU and memory usages.
-Results are saved in a timestamped folder. 
+Results are saved in a results folder.
 
 Example usage: 
 

@@ -34,11 +34,11 @@ set xlabel "Processors"
 
 set format y "%.0f"
 
-set output '../figures/amdahl.pdf'
+set output '../../figures/amdahl.pdf'
 
 set title "Solmuhub compared Amdahl's law"
 
-plot for [col=2:5] '../data/amdahl-numbers' u col:xtic(1) ti column(col)
+plot for [col=2:5] '../../data/amdahl-numbers' u col:xtic(1) ti column(col)
 
 unset output
 reset

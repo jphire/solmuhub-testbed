@@ -38,17 +38,17 @@ set yrange [0:100]
 
 set format y "%.0f%%"
 
-set output '../figures/profiles.pdf'
+set output '../../figures/profiles-urlMapped-2.pdf'
 
-set title "Profile"
+set title "Solmuhub profile using URL mapper"
 
 
-plot newhistogram "2-Nodes" lt 1, '../results/latest/2-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) ti column(2), for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) ti column(i), \
-	 newhistogram "4-Nodes" lt 1, '../results/latest/4-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-	 newhistogram "8-Nodes" lt 1, '../results/latest/8-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-     newhistogram "16-Nodes" lt 1, '../results/latest/16-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1)notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-     newhistogram "32-Nodes" lt 1, '../results/latest/32-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-     newhistogram "Local" lt 6, '../results/latest/0-nodes-1-depth-profile-stacked' u (100.*$2/$5):xtic(1) ti column(2), for [i=3:5] '' using (100.*column(i)/$5) title column(i), \
+plot newhistogram "2-Nodes" lt 1, '../../results/urlMapped-2/2-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) ti column(2), for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) ti column(i), \
+	 newhistogram "4-Nodes" lt 1, '../../results/urlMapped-2/4-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+	 newhistogram "8-Nodes" lt 1, '../../results/urlMapped-2/8-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+     newhistogram "16-Nodes" lt 1, '../../results/urlMapped-2/16-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1)notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+     newhistogram "32-Nodes" lt 1, '../../results/urlMapped-2/32-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
+     newhistogram "Local" lt 6, '../../results/urlMapped-2/0-nodes-1-depth-profile-stacked' u (100.*$2/$5):xtic(1) ti column(2), for [i=3:5] '' using (100.*column(i)/$5) title column(i), \
 
 #plot newhistogram "2-Nodes" lt 1, '../results/latest/2-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
 #	 newhistogram "4-Nodes" lt 1, '../results/latest/4-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \

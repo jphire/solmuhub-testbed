@@ -35,7 +35,7 @@ set xtics rotate by -30 #justify 'left'
 
 #set format y "%.0fms"
 
-set output '../figures/profile-lines.pdf'
+set output '../../figures/profile-lines.pdf'
 
 # set size 1.0, 1.0
 
@@ -45,7 +45,7 @@ set title "Profile"
 #plot '../results/latest/0-profile' u 2:3:4:xtic(1) ti '256x256 size JPG' ls 1, \
 #	 '../results/latest/0-profile' u 6:7:8:xtic(1) ti '512x512 size JPG' ls 2, \
 
-plot '../results/latest/2-profile-lines' u 1:3:xtic(2) ti '1 node' ls 1, \
+plot '../../results/dataMapped/2-profile-lines' u 1:3:xtic(2) ti '1 node' ls 1, \
 	 '' u 1:3:4:5 w yerrorbars ls 5 notitle, \
 	 '../results/latest/4-profile-lines' u 1:3:xtic(2) ti '2 nodes' ls 2, \
 	 '' u 1:3:4:5 w yerrorbars ls 5 notitle, \

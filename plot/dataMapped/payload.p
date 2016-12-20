@@ -17,32 +17,35 @@ set style line 3 lc rgb "#111111" lw 2.0 ps 1.0 pi 1
 
 #set nokey
 
+#set key under nobox
+
 set xtics out nomirror
 set ytics out nomirror
 
 set offset 1.0,0,0,0
 
 set xtics 0,1,4
-set xrange [0:6]
-set ytics 0,10,100
-set yrange [1:50]
+set xrange [0:3]
+#set ytics 0,5,10
+#set yrange [0:10]
 
 set xlabel "Number of nodes"
 
-set format y "%.0f%%"
+set ylabel "Response (MB)"
 
-set output '../figures/mem.pdf'
+set format y "%.0fs"
 
-# set logscale y 2
+set ytics format "%2.1f"
+
+set output '../../figures/payload-dataMapped.pdf'
 
 # set size 1.0, 1.0
 
-set title "Memory usage"
+set title "Response payload using data mapper"
 
-
-plot '../results/latest/mem.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
-	 '' u 6:7:8:xtic(1) ti '512x512 JPG' ls 2, \
-	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
-
+n = 1000000
+plot '../../results/dataMapped/payload.out' u ($2/n):($3/n):($4/n):xtic(1) ti '256x256 JPG' ls 1, \
+	'' u ($6/n):($7/n):($8/n):xtic(1) ti '512x512 JPG' ls 2, \
+#	'' u ($10/n):($11/n):($12/n):xtic(1) ti '1024x1024 JPG' ls 3
 unset output
 reset
