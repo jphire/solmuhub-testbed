@@ -1,6 +1,6 @@
 {
-  "name": "test2",
-  "description": "Testbed test 2, level one Data distributed execution",
+  "name": "test7",
+  "description": "Testbed test 7, level one Data distributed execution. Similar parameters to data mapped version to enable fair comparison.",
   "requestsPerType": 10,
   "sizes":[256, 512],
   "maxNodesArr": [0, 2, 4, 8],
@@ -26,7 +26,7 @@
 	"data": [
 	  {
 		"name": "feed",
-		"type": "local",
+		"type": "remote",
 		"contentType": "image/jpeg",
 		"processors": "jpegDecode",
 		"url": "http://localhost:4000/api/feeds/executable/1?size=SIZE&nodes=1&index=1",
@@ -36,7 +36,7 @@
 	"distribution": {
 	  "enabled": true,
 	  "maxDepth": 1,
-	  "mapper": "imageDataMapper",
+	  "mapper": "imageUrlMapper",
 	  "reducer": "imageReducer",
 	  "nodes": [
 		{
