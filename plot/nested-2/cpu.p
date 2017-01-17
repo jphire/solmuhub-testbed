@@ -40,9 +40,9 @@ set output '../../figures/cpu-nested-2.pdf'
 set title "CPU usage using URL mapper and depth 2"
 
 
-plot '../../results/nested-2/cpu.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
+plot '../../results/nested2-new/cpu.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
 	 '' u 6:7:8:xtic(1) ti '512x512 JPG' ls 2, \
-#	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
+	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
 
 unset output
 reset

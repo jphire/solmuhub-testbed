@@ -40,9 +40,9 @@ set output '../../figures/mem-nested-3.pdf'
 set title "Memory usage using URL mapper and depth 3"
 
 
-plot '../../results/nested-3/mem.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
+plot '../../results/nested3-new/mem.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
 	 '' u 6:7:8:xtic(1) ti '512x512 JPG' ls 2, \
-#	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
+	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
 
 unset output
 reset

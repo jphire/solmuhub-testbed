@@ -37,7 +37,7 @@ set output '../../figures/cpu-urlMapped-2.pdf'
 
 # set size 1.0, 1.0
 
-set title "CPU usage using URL mapper"
+set title "CPU usage using URL mapper and depth 1"
 
 
 plot '../../results/urlMapped-2/cpu.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \

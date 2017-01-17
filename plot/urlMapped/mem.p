@@ -37,7 +37,7 @@ set output '../../figures/mem-urlMapped-2.pdf'
 
 # set size 1.0, 1.0
 
-set title "Memory usage using URL mapper"
+set title "Memory usage using URL mapper and depth 1"
 
 
 plot '../../results/urlMapped-2/mem.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \

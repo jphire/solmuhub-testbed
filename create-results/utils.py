@@ -119,6 +119,8 @@ def configureTest(path):
                     depths.append(depth)
             except IndexError:
                 continue
+            except ValueError:
+                continue
 
     # Sort sizes so that results are in correct format for plotting
     sizes.sort(key=int)

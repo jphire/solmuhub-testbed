@@ -11,11 +11,11 @@ set style histogram rowstacked gap 0.8 title textcolor lt -1 offset character 0,
 set boxwidth 0.7 relative
 set style fill solid 0.5
 
-set style line 1 lc rgb "blue" lw 2.0 ps 0.4 pi 1
-set style line 2 lc rgb "red" lw 2.0 ps 0.4 pi 1
-set style line 3 lc rgb "green" lw 2.0 ps 0.4 pi 1
-set style line 4 lc rgb "#555555" lw 2.0 ps 1.0 pi 1
-set style line 5 lc rgb "#000000" lw 2.0 ps 0.4 pi 1
+#set style line 1 lc rgb "blue" lw 2.0 ps 0.4 pi 1
+#set style line 2 lc rgb "red" lw 2.0 ps 0.4 pi 1
+#set style line 3 lc rgb "green" lw 2.0 ps 0.4 pi 1
+#set style line 4 lc rgb "#555555" lw 2.0 ps 1.0 pi 1
+#set style line 5 lc rgb "#000000" lw 2.0 ps 0.4 pi 1
 
 set tmargin 3
 #set key opaque outside right top vertical
@@ -42,11 +42,18 @@ set output '../../figures/profiles-nested-3.pdf'
 
 set title "Solmuhub profile using URL mapper and depth 3"
 
+# color definitions
+#set palette gray
+#set palette rgb 6,11,26
+#set palette model HSV rgbformulae 15,5,7
+#set palette functions gray, gray, gray
+set palette rgbformulae 7,5,15
+unset colorbox
 
-plot newhistogram "2-Nodes" lt 1, '../../results/nested-3/2-nodes-3-depth-profile-stacked' u (100.*$2/$9):xtic(1) ti column(2), for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) ti column(i), \
-	 newhistogram "3-Nodes" lt 1, '../../results/nested-3/3-nodes-3-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-	 newhistogram "4-Nodes" lt 1, '../../results/nested-3/4-nodes-3-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
-     newhistogram "Local" lt 6, '../../results/nested-3/0-nodes-3-depth-profile-stacked' u (100.*$2/$5):xtic(1) ti column(2), for [i=3:5] '' using (100.*column(i)/$5) title column(i), \
+plot newhistogram "8-Nodes" lt 1, '../../results/nested3-new/8-nodes-3-depth-profile-stacked' u (100.*$2/$9):xtic(1) lt palette frac 2/9. ti column(2), for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) lt palette frac i/9. ti column(i), \
+	 newhistogram "16-Nodes" lt 1, '../../results/nested3-new/16-nodes-3-depth-profile-stacked' u (100.*$2/$9):xtic(1) lt palette frac 2/9. notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) lt palette frac i/9. notitle, \
+	 newhistogram "32-Nodes" lt 1, '../../results/nested3-new/32-nodes-3-depth-profile-stacked' u (100.*$2/$9):xtic(1) lt palette frac 2/9. notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) lt palette frac i/9. notitle, \
+     newhistogram "Local" lt 6, '../../results/nested3-new/0-nodes-3-depth-profile-stacked' u (100.*$2/$5):xtic(1) lt palette frac 2/5. ti column(2), for [i=3:5] '' using (100.*column(i)/$5) lt palette frac i/5. title column(i), \
 
 #plot newhistogram "2-Nodes" lt 1, '../results/latest/2-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \
 #	 newhistogram "4-Nodes" lt 1, '../results/latest/4-nodes-1-depth-profile-stacked' u (100.*$2/$9):xtic(1) notitle, for [i=3:9] '' using (100.*(column(i)-column(i-1))/$9) notitle, \

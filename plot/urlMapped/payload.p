@@ -27,7 +27,7 @@ set offset 1.0,0,0,0
 set xtics 0,1,4
 set xrange [0:5]
 #set ytics 0,5,10
-#set yrange [0:10]
+set yrange [0:16]
 
 set xlabel "Number of nodes"
 
@@ -35,13 +35,13 @@ set ylabel "Response (MB)"
 
 set format y "%.0fs"
 
-set ytics format "%2.0f"
+set ytics format "%2.1f"
 
 set output '../../figures/payload-urlMapped-2.pdf'
 
 # set size 1.0, 1.0
 
-set title "Response payload using URL mapper"
+set title "Response payload using URL mapper and depth 1"
 
 n = 1000000
 plot '../../results/urlMapped-2/payload.out' u ($2/n):($3/n):($4/n):xtic(1) ti '256x256 JPG' ls 1, \

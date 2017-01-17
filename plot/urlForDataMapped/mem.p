@@ -23,28 +23,26 @@ set ytics out nomirror
 set offset 1.0,0,0,0
 
 set xtics 0,1,4
-set xrange [0:6]
-#set ytics 0,5,10
-set yrange [0:80]
+set xrange [0:4]
+set ytics 0,10,100
+set yrange [1:50]
 
 set xlabel "Number of nodes"
 
-set ylabel "Latency (s)"
+set format y "%.0f%%"
 
-set format y "%.0fs"
+set output '../../figures/mem-urlForDataMapped.pdf'
 
-set ytics format "%2.0f"
-
-set output '../../figures/latency-urlMapped-2.pdf'
+# set logscale y 2
 
 # set size 1.0, 1.0
 
-set title "Latency using URL mapper and depth 1"
+set title "Memory usage using URL mapper and depth 1"
 
-n = 1000
-plot '../../results/urlMapped-2/latency.out' u ($2/n):($3/n):($4/n):xtic(1) ti '256x256 JPG' ls 1, \
-	'' u ($6/n):($7/n):($8/n):xtic(1) ti '512x512 JPG' ls 2, \
-	'' u ($10/n):($11/n):($12/n):xtic(1) ti '1024x1024 JPG' ls 3
+
+plot '../../results/urlMapped-dataClone/mem.out' u 2:3:4:xtic(1) ti '256x256 JPG' ls 1, \
+	 '' u 6:7:8:xtic(1) ti '512x512 JPG' ls 2, \
+#	 '' u 10:11:12:xtic(1) ti '1024x1024 JPG' ls 3
 
 unset output
 reset

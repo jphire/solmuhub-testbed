@@ -23,9 +23,9 @@ set ytics out nomirror
 set offset 1.0,0,0,0
 
 set xtics 0,1,4
-set xrange [0:4]
+set xrange [0:6]
 #set ytics 0,5,10
-#set yrange [0:10]
+set yrange [0:100]
 
 set xlabel "Number of nodes"
 
@@ -35,15 +35,15 @@ set format y "%.0fs"
 
 set ytics format "%2.0f"
 
-set output '../../figures/latency-dataMapped.pdf'
+set output '../../figures/latency-dataMapped-new.pdf'
 
 # set size 1.0, 1.0
 
-set title "Latency using data mapper"
+set title "Latency using data mapper and depth 1"
 
 n = 1000
-plot '../../results/dataMapped/latency.out' u ($2/n):($3/n):($4/n):xtic(1) ti '256x256 JPG' ls 1, \
-	'' u ($6/n):($7/n):($8/n):xtic(1) ti '512x512 JPG' ls 2, \
+plot '../../results/dataMapped-new/latency.out' u ($2/n):($3/n):($4/n):xtic(1) ti '256x256 JPG' ls 1, \
+#	'' u ($6/n):($7/n):($8/n):xtic(1) ti '512x512 JPG' ls 2, \
 #	'' u ($10/n):($11/n):($12/n):xtic(1) ti '1024x1024 JPG' ls 3
 
 unset output

@@ -5,10 +5,9 @@ import utils
 import shutil
 
 '''
-This script is used to get the averages and confidence intervals of latency and CPU and memory usages.
-Results are saved in a results folder.
+This script is used to create amdahls law data files for plots. Not working yet.
 
-Example usage: 
+Example usage:
 
 $ python create-results.py
 
