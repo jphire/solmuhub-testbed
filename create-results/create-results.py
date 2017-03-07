@@ -10,7 +10,7 @@ Results are saved in a results folder.
 
 Example usage: 
 
-$ python create-results.py
+$ python create-results.py -d urlMapped
 
 '''
 
@@ -45,10 +45,8 @@ if results_path == '':
     latest, logs_path = utils.getLatestTimestamp()
     results_path = '../results/' + str(latest)
 
-
-print 'Paths: '
-print 'source logs > ' + logs_path
-print 'results > ' + results_path
+print 'Source files > ' + logs_path
+print 'Result files > ' + results_path
 
 sizes, nodes, depths = utils.configureTest(logs_path)
 
@@ -80,7 +78,12 @@ for depth in depths:
 
             filename = "-".join([str(node), 'node', mapping, size, 'depth', depth])
             ret = utils.run(os.path.join(logs_path, filename), str(node), str(size))
-
+            print '----------------------------------------------'
+            print 'Size: ' + size
+            print 'Depth: ' + depth
+            print 'Node: ' + node
+            print 'CPU: ' + ret['cpu']
+            print '++++++++++++++++++++++++++++++++++++++++++++++'
             # Write the averages
             for name in types:
                 if len(ret[name]) == 0:

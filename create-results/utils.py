@@ -17,7 +17,6 @@ tags_map = {
 }
 
 def run(filename, nodes, size):
-    dataMap = {}
     profile = {}
     means = {}
     cpuData = []
@@ -58,7 +57,6 @@ def run(filename, nodes, size):
         payload = mean_confidence_interval(map(int, content_length))
     else:
         payload = []
-    print payload
 
     return {'nodes':nodes, 'size':size, 'cpu':cpu, 'mem':mem, 'latency':latency, 'payload':payload, 'profile':means}
 

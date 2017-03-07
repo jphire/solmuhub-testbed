@@ -1,7 +1,7 @@
 
 Amdahls Law
 
-Numbers are based on Solmuhub's profiling data, better way to get results is to compare actual latenices!
+Numbers are based on Solmuhub's profiling data, better way to get results is to compare actual latencies!
 
 		Feed-fetch	Data-fetch	Data-map	Piece-latency	Dist-latency	Reducing	Formatting
 
