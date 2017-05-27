@@ -17,6 +17,7 @@ set style line 5 lc rgb "green" lw 2.0 ps 0.4 pi 1
 
 #set key opaque outside right top vertical
 #set key title "Parallel portion"
+set key autotitle columnhead
 
 set xtics out nomirror
 set ytics out nomirror

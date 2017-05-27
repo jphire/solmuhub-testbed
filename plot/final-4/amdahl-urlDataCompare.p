@@ -19,7 +19,6 @@ set style line 5 lc rgb "green" lw 2.0 ps 0.4 pi 1
 #set key title "Parallel portion"
 set key autotitle columnhead
 
-
 set xtics out nomirror
 set ytics out nomirror
 
@@ -28,22 +27,23 @@ set ytics out nomirror
 #set xtics rotate by -30 #justify 'left'
 #set xtics ("1 node" 0 -1, "2 node" 0 -1, "3 node" 0 -1, "4" 0 -1)
 
-#set xrange [1:32]
+#set xrange [0:5]
 set ytics 0,2,20
 
 set yrange [0:20]
 
 set ylabel "Speedup factor"
-set xlabel "Number of hubs executing code"
+set xlabel "Number of hubs"
 
 set format y "%.0f"
 
-set output '../../figures/final-4/amdahl-urlMapped.pdf'
-#set output '~/Opiskelu/gradu/Figures/amdahl-types-full.pdf'
+set output '../../figures/final-4/amdahl-urlDataCompare.pdf'
 
-set title "Solmuhub and Amdahl's law, URL mapped"
+#set title "Solmuhub and Amdahl's law, one-hop execution"
+set title ""
 
 plot '../../data/amdahl-types-full' u 2:xtic(1) ti 'Url-mapped' ls 4, \
+'../../data/amdahl-types-full' u 3:xtic(1) ti 'Data-mapped' ls 3, \
 '' u 8:xtic(1) ti '80% distributed' lt 2 lc rgb "#555555" lw 2, \
 '' u 9:xtic(1) ti '90% distributed' lt 3 lc rgb "#555555" lw 2, \
 '' u 10:xtic(1) ti '95%, SH theor. max' lt 4 lc rgb "#555555" lw 2, \

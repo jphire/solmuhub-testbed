@@ -17,6 +17,7 @@ set style line 5 lc rgb "green" lw 2.0 ps 0.4 pi 1
 
 #set key opaque outside right top vertical
 #set key title "Parallel portion"
+set key autotitle columnhead
 
 set xtics out nomirror
 set ytics out nomirror
@@ -38,7 +39,8 @@ set format y "%.0f"
 
 set output '../../figures/urlDataCompare/amdahl-urlData.pdf'
 
-set title "Solmuhub and Amdahl's law, one-hop execution"
+#set title "Solmuhub and Amdahl's law, one-hop execution"
+set title ""
 
 plot '../../data/amdahl-types-full' u 2:xtic(1) ti 'Url-mapped' ls 4, \
 '../../data/amdahl-types-full' u 3:xtic(1) ti 'Data-mapped' ls 3, \
